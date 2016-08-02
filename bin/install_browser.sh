@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/bin/bash
 
 if [[ "${BROWSER}" == "chrome" ]]
 then
@@ -19,6 +18,11 @@ then
     sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
     sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
     chromedriver --version
+elif [[ "${BROWSER}" == "phantomjs" ]]
+then
+    wget -O ~/phantomjs-2.1.1-linux-x86_64.tar.bz2 https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2
+    tar xjf ~/phantomjs-2.1.1-linux-x86_64.tar.bz2 -C ~
+    sudo ln -s ~/phantomjs-2.1.1-linux-x86_64/bin/phantomjs /usr/local/bin/phantomjs
 else
     # installing Firefox to get all dependencies
     sudo apt-get install firefox -y -q
