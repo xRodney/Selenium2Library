@@ -1,5 +1,4 @@
 #!/bin/sh
-BROWSER=$1
 
 
 if [[ "${BROWSER}" == "chrome" ]]
