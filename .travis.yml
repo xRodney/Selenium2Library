@@ -1,5 +1,5 @@
 language: python
-sudo: false
+sudo: required
 python:
   - "2.7"
 install:
@@ -10,6 +10,7 @@ install:
   -
 before_script:
   - ./bin/install_browser.sh
+  - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
   - "python test/run_tests.py python $BROWSER --noncritical known_issue_-_travisci"
