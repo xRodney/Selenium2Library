@@ -16,7 +16,6 @@ ROBOT_ARGS = [
     '--escape', 'space:SP',
     '--report', 'none',
     '--log', 'none',
-    #'--suite', 'Acceptance.Keywords.Textfields',
     '--loglevel', 'DEBUG',
     '--pythonpath', '%(pythonpath)s',
     '--noncritical', 'known_issue_-_%(pyVersion)s',
@@ -31,7 +30,11 @@ REBOT_ARGS = [
     '--noncritical', 'known_issue_-_%(pyVersion)s',
     '--noncritical', 'known_issue_-_%(browser)s',
 ]
-ARG_VALUES = {'outdir': env.RESULTS_DIR, 'pythonpath': ':'.join((env.SRC_DIR, env.TEST_LIBS_DIR))}
+ARG_VALUES = {
+    'outdir': env.RESULTS_DIR,
+    'pythonpath': ':'.join((env.SRC_DIR, env.TEST_LIBS_DIR))
+}
+
 
 def acceptance_tests(interpreter, browser, args):
     ARG_VALUES['browser'] = browser.replace('*', '')
@@ -44,10 +47,12 @@ def acceptance_tests(interpreter, browser, args):
     stop_http_server()
     return process_output(args)
 
+
 def start_http_server():
     server_output = TemporaryFile()
-    Popen(['python', env.HTTP_SERVER_FILE ,'start'],
+    Popen(['python', env.HTTP_SERVER_FILE, 'start'],
           stdout=server_output, stderr=server_output)
+
 
 def execute_tests(runner, args):
     if not os.path.exists(env.RESULTS_DIR):
@@ -58,8 +63,10 @@ def execute_tests(runner, args):
     syslog = os.path.join(env.RESULTS_DIR, 'syslog.txt')
     call(command, shell=os.sep=='\\', env=dict(os.environ, ROBOT_SYSLOG_FILE=syslog))
 
+
 def stop_http_server():
     call(['python', env.HTTP_SERVER_FILE, 'stop'])
+
 
 def process_output(args):
     print
@@ -78,6 +85,7 @@ def process_output(args):
         print '%d critical test%s failed' % (rc, 's' if rc != 1 else '')
     return rc
 
+
 def _has_robot_27():
     try:
         from robot.result import ExecutionResult
@@ -85,14 +93,17 @@ def _has_robot_27():
         return False
     return True
 
+
 def _exit(rc):
     sys.exit(rc)
+
 
 def _help():
     print 'Usage:  python run_tests.py python|jython browser [options]'
     print
     print 'See README.txt for details.'
     return 255
+
 
 def _run_unit_tests():
     print 'Running unit tests'
