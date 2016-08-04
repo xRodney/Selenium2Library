@@ -74,8 +74,8 @@ def process_output(args):
         call(['python', os.path.join(env.RESOURCES_DIR, 'statuschecker.py'),
              os.path.join(env.RESULTS_DIR, 'output.xml')])
     rebot = 'rebot' if os.sep == '/' else 'rebot.bat'
-    rebot_cmd = [rebot] + [ arg % ARG_VALUES for arg in REBOT_ARGS ] + args + \
-                [os.path.join(ARG_VALUES['outdir'], 'output.xml') ]
+    rebot_cmd = [rebot] + [arg % ARG_VALUES for arg in REBOT_ARGS] + args + \
+                [os.path.join(ARG_VALUES['outdir'], 'output.xml')]
     print ''
     print 'Starting output processing with command:\n' + ' '.join(rebot_cmd)
     rc = call(rebot_cmd, env=os.environ)
@@ -89,7 +89,7 @@ def process_output(args):
 def _has_robot_27():
     try:
         from robot.result import ExecutionResult
-    except:
+    except ImportError:
         return False
     return True
 
@@ -115,7 +115,7 @@ def _run_unit_tests():
     return failures
 
 
-if __name__ ==  '__main__':
+if __name__ == '__main__':
     if not len(sys.argv) > 2:
         _exit(_help())
     unit_failures = _run_unit_tests()
