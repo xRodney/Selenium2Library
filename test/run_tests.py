@@ -47,7 +47,11 @@ def acceptance_tests(interpreter, browser, args):
         ROBOT_ARGS.extend(['--noncritical', 'known_issue_-_travisci'])
         ROBOT_ARGS.extend(['--variable', 'SAUCE_USERNAME:%(sauceUserName)s'])
         ROBOT_ARGS.extend(['--variable', 'SAUCE_ACCESS_KEY:%(sauceAccessKey)s'])
-        ROBOT_ARGS.extend(['--variable', 'DESIRED_CAPABILITIES:tunnel-identifier:%(travisJobNumber)s'])
+        ROBOT_ARGS.extend(
+            ['--variable',
+             'DESIRED_CAPABILITIES:build:%(browser)s-%(travisJobNumber)s:tunnel-identifier:%(travisJobNumber)s'
+             ]
+        )
         ROBOT_ARGS.extend(
             [
                 '--variable',
