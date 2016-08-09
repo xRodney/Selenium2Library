@@ -8,6 +8,15 @@ from tempfile import TemporaryFile
 
 from run_unit_tests import run_unit_tests
 
+REBOT_ARGS = [
+    '--outputdir', '%(outdir)s',
+    '--name', '%(browser)sSPAcceptanceSPTests',
+    '--escape', 'space:SP',
+    '--critical', 'regression',
+    '--noncritical', 'inprogress',
+    '--noncritical', 'known_issue_-_%(pyVersion)s',
+    '--noncritical', 'known_issue_-_%(browser)s',
+]
 ROBOT_ARGS = [
     '--doc', 'SeleniumSPacceptanceSPtestsSPwithSP%(browser)s',
     '--outputdir', '%(outdir)s',
@@ -21,15 +30,6 @@ ROBOT_ARGS = [
     '--noncritical', 'known_issue_-_%(pyVersion)s',
     '--noncritical', 'known_issue_-_%(browser)s',
 ]
-REBOT_ARGS = [
-    '--outputdir', '%(outdir)s',
-    '--name', '%(browser)sSPAcceptanceSPTests',
-    '--escape', 'space:SP',
-    '--critical', 'regression',
-    '--noncritical', 'inprogress',
-    '--noncritical', 'known_issue_-_%(pyVersion)s',
-    '--noncritical', 'known_issue_-_%(browser)s',
-]
 ARG_VALUES = {
     'outdir': env.RESULTS_DIR,
     'pythonpath': ':'.join((env.SRC_DIR, env.TEST_LIBS_DIR))
@@ -39,6 +39,21 @@ ARG_VALUES = {
 def acceptance_tests(interpreter, browser, args):
     ARG_VALUES['browser'] = browser.replace('*', '')
     ARG_VALUES['pyVersion'] = interpreter + sys.version[:3]
+    ARG_VALUES['sauceUserName'] = env.SAUCE_USERNAME
+    ARG_VALUES['sauceAccessKey'] = env.SAUCE_ACCESS_KEY
+    ARG_VALUES['travisJobNumber'] = env.TRAVIS_JOB_NUMBER
+
+    if env.TRAVIS:
+        ROBOT_ARGS.extend(['--noncritical', 'known_issue_-_travisci'])
+        ROBOT_ARGS.extend(['--variable', 'SAUCE_USERNAME:%(sauceUserName)s'])
+        ROBOT_ARGS.extend(['--variable', 'SAUCE_ACCESS_KEY:%(sauceAccessKey)s'])
+        ROBOT_ARGS.extend(['--variable', 'DESIRED_CAPABILITIES:tunnel-identifier:%(travisJobNumber)s'])
+        ROBOT_ARGS.extend(
+            [
+                '--variable',
+                'REMOTE_URL:http://%(sauceUserName)s:%(sauceAccessKey)s@ondemand.saucelabs.com:80/wd/hub'
+             ]
+        )
     start_http_server()
     runner = {'python': 'pybot', 'jython': 'jybot', 'ipy': 'ipybot'}[interpreter]
     if os.sep == '\\':

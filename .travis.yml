@@ -2,9 +2,7 @@ language: python
 sudo: false
 addons:
   firefox: "47.0.1"
-  sauce_connect:
-    username: "Your Sauce Labs username"
-    access_key: "Your Sauce Labs access key"
+  sauce_connect: auto
 python:
   - "2.7"
 install:
@@ -19,5 +17,9 @@ before_script:
 script:
   - "python test/run_tests.py python $BROWSER --noncritical known_issue_-_travisci"
 env:
+  global:
+    - secure: "QyY0j8C+hVhsGLv4YU0UMvLm5wBDg6xT5J0Ee77C/JAQ6vcdCMpTfWI8oDxTZb7pBhpDkYuNe747yCYF5PrdBYQbO08FilxctReuJfMXcH44rZC5q49mUmPamkvg1LkzIWuC1s9uKnjlvyDT5ojuPXZl2Vn0gIhSIg+yOyBkM1U="
+    - secure: "HJaJTYauaBZODMDkbnRVsiCk+t2uVtztkkJ5V4dXSnE1uIBms2PVbufQwb+YNvzHkGheLtpnt/hLM1HhmSFgUtOCf+eumQ6kaLR2KRVEysXwWJzgZoLBidNBOy5rvAIsc9JJbDaIgYVGzyaJGTP9AMb8CyvIPE//lH10sf+GB7g="
   matrix:
   - BROWSER=firefox
+  - BROWSER=chrome
