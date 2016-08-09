@@ -49,7 +49,7 @@ def acceptance_tests(interpreter, browser, args):
         ROBOT_ARGS.extend(['--variable', 'SAUCE_ACCESS_KEY:%(sauceAccessKey)s'])
         ROBOT_ARGS.extend(
             ['--variable',
-             'DESIRED_CAPABILITIES:build:%(browser)s-%(travisJobNumber)s:tunnel-identifier:%(travisJobNumber)s'
+             'DESIRED_CAPABILITIES:build:%(travisJobNumber)s-%(browser)s:tunnel-identifier:%(travisJobNumber)s'
              ]
         )
         ROBOT_ARGS.extend(
