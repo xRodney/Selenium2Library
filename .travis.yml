@@ -13,7 +13,7 @@ before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
-  - "python test/run_tests.py python '$BROWSER' --noncritical known_issue_-_travisci"
+  - "python test/run_tests.py python \"$BROWSER\" --noncritical known_issue_-_travisci"
 env:
   global:
     - secure: "QyY0j8C+hVhsGLv4YU0UMvLm5wBDg6xT5J0Ee77C/JAQ6vcdCMpTfWI8oDxTZb7pBhpDkYuNe747yCYF5PrdBYQbO08FilxctReuJfMXcH44rZC5q49mUmPamkvg1LkzIWuC1s9uKnjlvyDT5ojuPXZl2Vn0gIhSIg+yOyBkM1U="
