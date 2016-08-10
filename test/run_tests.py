@@ -47,17 +47,18 @@ def acceptance_tests(interpreter, browser, args):
         ROBOT_ARGS.extend(['--noncritical', 'known_issue_-_travisci'])
         ROBOT_ARGS.extend(['--variable', 'SAUCE_USERNAME:%(sauceUserName)s'])
         ROBOT_ARGS.extend(['--variable', 'SAUCE_ACCESS_KEY:%(sauceAccessKey)s'])
-        ROBOT_ARGS.extend(
-            ['--variable',
-             'DESIRED_CAPABILITIES:build:%(travisJobNumber)s-%(browser)s:tunnel-identifier:%(travisJobNumber)s'
-             ]
-        )
-        ROBOT_ARGS.extend(
-            [
-                '--variable',
-                'REMOTE_URL:http://%(sauceUserName)s:%(sauceAccessKey)s@ondemand.saucelabs.com:80/wd/hub'
-             ]
-        )
+        if env.BROWSER != "firefox":
+            ROBOT_ARGS.extend(
+                ['--variable',
+                 'DESIRED_CAPABILITIES:build:%(travisJobNumber)s-%(browser)s,tunnel-identifier:%(travisJobNumber)s'
+                 ]
+            )
+            ROBOT_ARGS.extend(
+                [
+                    '--variable',
+                    'REMOTE_URL:http://%(sauceUserName)s:%(sauceAccessKey)s@ondemand.saucelabs.com:80/wd/hub'
+                 ]
+            )
     start_http_server()
     runner = {'python': 'pybot', 'jython': 'jybot', 'ipy': 'ipybot'}[interpreter]
     if os.sep == '\\':

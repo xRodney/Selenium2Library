@@ -21,3 +21,4 @@ env:
   matrix:
   - BROWSER=firefox
   - BROWSER=chrome
+  - BROWSER=internet explorer
