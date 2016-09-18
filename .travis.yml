@@ -3,23 +3,30 @@ sudo: false
 addons:
   firefox: "47.0.1"
   sauce_connect: true
-python:
-  - "2.7"
 install:
-  - pip install robotframework
-  - pip install selenium
-  - pip install decorator
-  - pip install mockito
+  - pip install .
+  - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
 before_script:
   - "export DISPLAY=:99.0"
   - "sh -e /etc/init.d/xvfb start"
 script:
   - "python test/run_tests.py python \"$BROWSER\" --noncritical known_issue_-_travisci"
+python:
+  -  "2.7"
 env:
   global:
     - secure: "QyY0j8C+hVhsGLv4YU0UMvLm5wBDg6xT5J0Ee77C/JAQ6vcdCMpTfWI8oDxTZb7pBhpDkYuNe747yCYF5PrdBYQbO08FilxctReuJfMXcH44rZC5q49mUmPamkvg1LkzIWuC1s9uKnjlvyDT5ojuPXZl2Vn0gIhSIg+yOyBkM1U="
     - secure: "HJaJTYauaBZODMDkbnRVsiCk+t2uVtztkkJ5V4dXSnE1uIBms2PVbufQwb+YNvzHkGheLtpnt/hLM1HhmSFgUtOCf+eumQ6kaLR2KRVEysXwWJzgZoLBidNBOy5rvAIsc9JJbDaIgYVGzyaJGTP9AMb8CyvIPE//lH10sf+GB7g="
-  matrix:
-    - BROWSER=firefox
-    - BROWSER=chrome
-    - BROWSER="internet explorer"
+matrix:
+  allow_failures:
+    - env: BROWSER=chrome
+    - env: BROWSER="internet explorer"
+    - env: BROWSER=safari
+  include:
+    - python: "3.5"
+      env: BROWSER=firefox
+    - env: BROWSER=firefox
+    - env: BROWSER=chrome
+    - env: BROWSER="internet explorer"
+    - env: BROWSER=safari
