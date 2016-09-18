@@ -23,10 +23,7 @@ matrix:
     - env: BROWSER=chrome
     - env: BROWSER="internet explorer"
     - env: BROWSER=safari
-  include:
     - python: "3.5"
       env: BROWSER=firefox
+  include:
     - env: BROWSER=firefox
-    - env: BROWSER=chrome
-    - env: BROWSER="internet explorer"
-    - env: BROWSER=safari
