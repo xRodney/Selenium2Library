@@ -1,8 +1,5 @@
 language: python
 sudo: false
-addons:
-  firefox: "47.0.1"
-  sauce_connect: true
 install:
   - pip install .
   - pip install -r requirements.txt
@@ -13,17 +10,38 @@ before_script:
 script:
   - "python test/run_tests.py python \"$BROWSER\" --noncritical known_issue_-_travisci"
 python:
-  -  "2.7"
+  - "2.7"
 env:
   global:
     - secure: "QyY0j8C+hVhsGLv4YU0UMvLm5wBDg6xT5J0Ee77C/JAQ6vcdCMpTfWI8oDxTZb7pBhpDkYuNe747yCYF5PrdBYQbO08FilxctReuJfMXcH44rZC5q49mUmPamkvg1LkzIWuC1s9uKnjlvyDT5ojuPXZl2Vn0gIhSIg+yOyBkM1U="
     - secure: "HJaJTYauaBZODMDkbnRVsiCk+t2uVtztkkJ5V4dXSnE1uIBms2PVbufQwb+YNvzHkGheLtpnt/hLM1HhmSFgUtOCf+eumQ6kaLR2KRVEysXwWJzgZoLBidNBOy5rvAIsc9JJbDaIgYVGzyaJGTP9AMb8CyvIPE//lH10sf+GB7g="
 matrix:
-  allow_failures:
-    - env: BROWSER=chrome
-    - env: BROWSER="internet explorer"
-    - env: BROWSER=safari
-    - python: "3.5"
-      env: BROWSER=firefox
   include:
-    - env: BROWSER=firefox
+    - os: linux
+      env:
+        - BROWSER=chrome
+      addons:
+        sauce_connect: true
+    - os: linux
+      env:
+        - BROWSER="internet explorer"
+      addons:
+        sauce_connect: true
+    - os: linux
+      env:
+        - BROWSER=safari
+      addons:
+        sauce_connect: true
+    - os: linux
+      env:
+        - BROWSER=firefox
+      addons:
+        sauce_connect: true
+      addons:
+        firefox: "47.0.1"
+    - os: osx
+      env:
+        - BROWSER=firefox
+      addons:
+        firefox: "47.0.1"
+
