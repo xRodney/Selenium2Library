@@ -36,8 +36,6 @@ matrix:
       env:
         - BROWSER=firefox
       addons:
-        sauce_connect: true
-      addons:
         firefox: "47.0.1"
     - os: osx
       env:
